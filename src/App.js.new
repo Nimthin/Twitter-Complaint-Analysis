@@ -1,0 +1,495 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Container, Row, Col, Card, Badge, Button, Navbar, 
+  Form, Spinner, Alert, ButtonGroup, ProgressBar 
+} from 'react-bootstrap';
+import * as XLSX from 'xlsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './App.css';
+import { processTweets, TOPIC_DEFINITIONS as TOPIC_DEFS } from './services/TopicModelingService';
+
+// Function to read Excel file and process data
+const processExcelData = async () => {
+  try {
+    const response = await fetch('/Twitter - Next.xlsx');
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet);
+
+    // Process data and assign topics using the TopicModelingService
+    const tweets = data.map((tweet, index) => ({
+      id: index,
+      text: tweet.Tweet || tweet.text || '',
+      date: tweet.Date || tweet.date || new Date().toISOString(),
+      likes: tweet.Likes || 0,
+      retweets: tweet.Retweets || 0,
+      user: tweet.User || 'User',
+      url: tweet.URL || '#',
+      expanded: false
+    }));
+
+    // Process all tweets with topic modeling
+    const processedTweets = processTweets(tweets);
+    
+    // Group tweets by topic for the dashboard
+    const topics = TOPIC_DEFS.map(topicDef => {
+      const topicTweets = processedTweets.filter(t => t.primaryTopic === topicDef.name);
+      
+      // Create subtopics based on confidence levels
+      const subtopics = [
+        {
+          name: 'High Confidence',
+          tweetCount: topicTweets.filter(t => t.confidence > 0.7).length,
+          tweets: topicTweets.filter(t => t.confidence > 0.7)
+        },
+        {
+          name: 'Medium Confidence',
+          tweetCount: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7).length,
+          tweets: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7)
+        },
+        {
+          name: 'Low Confidence',
+          tweetCount: topicTweets.filter(t => t.confidence <= 0.4).length,
+          tweets: topicTweets.filter(t => t.confidence <= 0.4)
+        }
+      ].filter(st => st.tweetCount > 0);
+
+      return {
+        name: topicDef.name,
+        tweetCount: topicTweets.length,
+        subtopics: subtopics
+      };
+    }).filter(topic => topic.tweetCount > 0);
+
+    return topics;
+  } catch (error) {
+    console.error('Error processing Excel file:', error);
+    return [];
+  }
+};
+
+// Header Component
+const Header = ({ view, onBack, topic, subtopic }) => {
+  return (
+    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+      <Container>
+        <Navbar.Brand href="#">
+          <i className="bi bi-twitter me-2"></i>
+          Next Fashion Complaints Analysis
+        </Navbar.Brand>
+        <div className="d-flex align-items-center">
+          {view !== 'dashboard' && (
+            <Button variant="outline-light" size="sm" onClick={onBack} className="me-2">
+              <i className="bi bi-arrow-left"></i> Back
+            </Button>
+          )}
+          {view === 'tweets' && (
+            <span className="text-light">
+              {topic} {subtopic && `> ${subtopic}`}
+            </span>
+          )}
+        </div>
+      </Container>
+    </Navbar>
+  );
+};
+
+// Dashboard Component
+const Dashboard = ({ topics, onSelectTopic }) => {
+  return (
+    <div className="dashboard">
+      <h2 className="mb-4">Complaint Categories</h2>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {topics.map((topic) => (
+          <Col key={topic.name}>
+            <Card className="h-100 shadow-sm" onClick={() => onSelectTopic(topic)}>
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>{topic.name}</Card.Title>
+                <Card.Text className="text-muted">
+                  {topic.tweetCount} {topic.tweetCount === 1 ? 'complaint' : 'complaints'}
+                </Card.Text>
+                <div className="mt-auto">
+                  <ProgressBar className="mb-2">
+                    <ProgressBar 
+                      variant="success" 
+                      now={(topic.subtopics[0]?.tweetCount / topic.tweetCount) * 100 || 0} 
+                      key={1} 
+                    />
+                    <ProgressBar 
+                      variant="warning" 
+                      now={(topic.subtopics[1]?.tweetCount / topic.tweetCount) * 100 || 0} 
+                      key={2} 
+                    />
+                    <ProgressBar 
+                      variant="danger" 
+                      now={(topic.subtopics[2]?.tweetCount / topic.tweetCount) * 100 || 0} 
+                      key={3} 
+                    />
+                  </ProgressBar>
+                  <div className="d-flex justify-content-between small text-muted">
+                    <span>High</span>
+                    <span>Confidence</span>
+                    <span>Low</span>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+};
+
+// TopicsList Component
+const TopicsList = ({ topics, onSelectTopic }) => {
+  return (
+    <div className="topics-list">
+      <h2 className="mb-4">Select a Topic</h2>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {topics.map((topic) => (
+          <Col key={topic.name}>
+            <Card 
+              className="h-100 shadow-sm topic-card"
+              onClick={() => onSelectTopic(topic)}
+            >
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>{topic.name}</Card.Title>
+                <Card.Text className="text-muted">
+                  {topic.tweetCount} {topic.tweetCount === 1 ? 'complaint' : 'complaints'}
+                </Card.Text>
+                <div className="mt-auto">
+                  <div className="d-flex justify-content-between small mb-2">
+                    <span className="text-muted">Confidence Levels:</span>
+                  </div>
+                  <div className="d-flex">
+                    <Badge bg="success" className="me-1 flex-grow-1 text-start">
+                      High: {topic.subtopics[0]?.tweetCount || 0}
+                    </Badge>
+                    <Badge bg="warning" className="mx-1 flex-grow-1 text-start">
+                      Med: {topic.subtopics[1]?.tweetCount || 0}
+                    </Badge>
+                    <Badge bg="danger" className="ms-1 flex-grow-1 text-start">
+                      Low: {topic.subtopics[2]?.tweetCount || 0}
+                    </Badge>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+};
+
+// TweetsList Component
+const TweetsList = ({ tweets, topic, subtopic, onBack }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('date');
+  const [sortOrder, setSortOrder] = useState('desc');
+  const [expandedTweets, setExpandedTweets] = useState({});
+
+  // Toggle tweet expansion
+  const toggleExpand = (id) => {
+    setExpandedTweets(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  // Get confidence badge variant based on confidence level
+  const getConfidenceVariant = (confidence) => {
+    if (confidence > 0.7) return 'success';
+    if (confidence > 0.4) return 'warning';
+    return 'danger';
+  };
+
+  // Format confidence as percentage
+  const formatConfidence = (confidence) => {
+    return Math.round(confidence * 100) + '%';
+  };
+
+  // Filter tweets by search term
+  const filteredTweets = tweets.filter(tweet => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      tweet.text.toLowerCase().includes(searchLower) ||
+      tweet.user.toLowerCase().includes(searchLower) ||
+      (tweet.topics && tweet.topics.toLowerCase().includes(searchLower))
+    );
+  });
+
+  // Sort tweets
+  const sortedTweets = [...filteredTweets].sort((a, b) => {
+    let comparison = 0;
+    
+    if (sortBy === 'date') {
+      comparison = new Date(a.date) - new Date(b.date);
+    } else if (sortBy === 'likes') {
+      comparison = (a.likes || 0) - (b.likes || 0);
+    } else if (sortBy === 'retweets') {
+      comparison = (a.retweets || 0) - (b.retweets || 0);
+    } else if (sortBy === 'confidence') {
+      comparison = (a.confidence || 0) - (b.confidence || 0);
+    }
+    
+    return sortOrder === 'asc' ? comparison : -comparison;
+  });
+
+  return (
+    <div className="tweets-list">
+      <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h4 className="mb-2 mb-md-0">
+          {topic} 
+          {subtopic && <span className="text-muted">› {subtopic}</span>}
+          <Badge bg="light" text="dark" className="ms-2">
+            {filteredTweets.length} {filteredTweets.length === 1 ? 'tweet' : 'tweets'}
+          </Badge>
+        </h4>
+        <div className="d-flex flex-wrap align-items-center gap-2">
+          <Form.Control
+            type="search"
+            placeholder="Search tweets..."
+            className="me-2"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: '200px' }}
+          />
+          <div className="d-flex align-items-center">
+            <Form.Select 
+              value={sortBy} 
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{ width: '150px' }}
+              size="sm"
+              className="me-2"
+            >
+              <option value="date">Date</option>
+              <option value="likes">Likes</option>
+              <option value="retweets">Retweets</option>
+              <option value="confidence">Confidence</option>
+            </Form.Select>
+            <Button 
+              variant="outline-secondary" 
+              size="sm"
+              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+              title={sortOrder === 'asc' ? 'Sort descending' : 'Sort ascending'}
+            >
+              {sortOrder === 'asc' ? '↑' : '↓'}
+            </Button>
+          </div>
+        </div>
+      </div>
+      
+      {sortedTweets.length === 0 ? (
+        <Alert variant="info">No tweets found matching your criteria. Try adjusting your search or filters.</Alert>
+      ) : (
+        <Row xs={1} md={2} lg={3} className="g-4">
+          {sortedTweets.map((tweet) => (
+            <Col key={tweet.id}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <div className="d-flex justify-content-between mb-2">
+                    <Card.Subtitle className="mb-1 text-muted">
+                      <i className="bi bi-person-circle me-1"></i>
+                      @{tweet.user}
+                    </Card.Subtitle>
+                    <small className="text-muted">
+                      <i className="bi bi-calendar3 me-1"></i>
+                      {new Date(tweet.date).toLocaleDateString()}
+                    </small>
+                  </div>
+                  <Card.Text 
+                    className={`tweet-text ${expandedTweets[tweet.id] ? '' : 'text-truncate'}`}
+                    onClick={() => toggleExpand(tweet.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {tweet.text}
+                  </Card.Text>
+                  
+                  {/* Topic Badges */}
+                  <div className="mb-2">
+                    {tweet.topicScores && tweet.topicScores.slice(0, 3).map((topic, idx) => (
+                      <Badge 
+                        key={idx} 
+                        bg={idx === 0 ? 'primary' : 'secondary'} 
+                        className="me-1 mb-1"
+                        title={`Confidence: ${formatConfidence(topic.score)}`}
+                      >
+                        {topic.name}
+                        {idx === 0 && (
+                          <Badge bg={getConfidenceVariant(topic.score)} className="ms-1">
+                            {formatConfidence(topic.score)}
+                          </Badge>
+                        )}
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                  <div className="d-flex justify-content-between align-items-center mt-auto">
+                    <div>
+                      <Badge bg="light" text="dark" className="me-1">
+                        <i className="bi bi-heart-fill text-danger me-1"></i>
+                        {tweet.likes || 0}
+                      </Badge>
+                      <Badge bg="light" text="dark">
+                        <i className="bi bi-arrow-repeat text-success me-1"></i>
+                        {tweet.retweets || 0}
+                      </Badge>
+                    </div>
+                    <div>
+                      <Badge bg={getConfidenceVariant(tweet.confidence)}>
+                        <i className="bi bi-graph-up me-1"></i>
+                        {formatConfidence(tweet.confidence)}
+                      </Badge>
+                    </div>
+                  </div>
+                </Card.Body>
+                <Card.Footer className="bg-transparent border-top-0 pt-0">
+                  <div className="d-grid">
+                    <Button 
+                      variant="outline-primary" 
+                      size="sm"
+                      onClick={() => window.open(tweet.url, '_blank')}
+                      className="d-flex align-items-center justify-content-center"
+                    >
+                      <i className="bi bi-twitter me-1"></i>
+                      View on Twitter
+                    </Button>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
+    </div>
+  );
+};
+
+// Main App Component
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [topics, setTopics] = useState([]);
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [currentTopic, setCurrentTopic] = useState(null);
+  const [currentSubtopic, setCurrentSubtopic] = useState(null);
+
+  // Load data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const data = await processExcelData();
+        setTopics(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error loading data:', err);
+        setError('Failed to load data. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Handle topic selection
+  const handleTopicSelect = (topic) => {
+    setCurrentTopic(topic);
+    setCurrentSubtopic(null);
+    setCurrentView('subtopics');
+  };
+
+  // Handle subtopic selection
+  const handleSubtopicSelect = (subtopic) => {
+    setCurrentSubtopic(subtopic);
+    setCurrentView('tweets');
+  };
+
+  // Handle back navigation
+  const handleBack = () => {
+    if (currentView === 'tweets') {
+      setCurrentView('subtopics');
+    } else if (currentView === 'subtopics') {
+      setCurrentView('dashboard');
+      setCurrentTopic(null);
+    }
+  };
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <Container className="mt-5">
+        <Alert variant="danger">
+          <Alert.Heading>Error Loading Data</Alert.Heading>
+          <p>{error}</p>
+          <Button variant="primary" onClick={() => window.location.reload()}>
+            Retry
+          </Button>
+        </Alert>
+      </Container>
+    );
+  }
+
+  return (
+    <div className="app">
+      <Header 
+        view={currentView} 
+        onBack={handleBack} 
+        topic={currentTopic?.name} 
+        subtopic={currentSubtopic?.name} 
+      />
+      
+      <Container className="py-4">
+        {currentView === 'dashboard' && (
+          <Dashboard 
+            topics={topics} 
+            onSelectTopic={handleTopicSelect} 
+          />
+        )}
+        
+        {currentView === 'subtopics' && currentTopic && (
+          <TopicsList 
+            topics={[currentTopic]} 
+            onSelectTopic={handleSubtopicSelect} 
+          />
+        )}
+        
+        {currentView === 'tweets' && currentSubtopic && (
+          <TweetsList 
+            tweets={currentSubtopic.tweets} 
+            topic={currentTopic.name}
+            subtopic={currentSubtopic.name}
+            onBack={handleBack}
+          />
+        )}
+      </Container>
+      
+      <footer className="bg-light text-center text-muted py-3 mt-5">
+        <Container>
+          <p className="mb-0">
+            Next Fashion Complaints Analysis &copy; {new Date().getFullYear()}
+          </p>
+        </Container>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
