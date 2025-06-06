@@ -11,11 +11,19 @@ import AnalyticsService from '../services/AnalyticsService';
 import { Link } from 'react-router-dom';
 
 // Custom colors for consistent theming
-const COLORS = [
-  '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28DFF', 
-  '#FF6B8B', 
-  '#4BC0C0', '#C084FC', '#F87171', '#34D399', '#818CF8', '#FB923C'
+const NEW_COLORS = [
+  '#ff4c04', // Primary color
+  '#ff7b42', // Lighter orange
+  '#ffaa7f', // Lightest orange
+  '#0088FE', // Original blue
+  '#00C49F', // Original teal/green
+  '#FFBB28', // Original yellow
+  // Add more from original COLORS if more than 6 distinct colors are frequently needed
+  '#A28DFF', '#FF6B8B', '#4BC0C0', '#C084FC', '#F87171', '#34D399'
 ];
+
+// Fallback for components that might still reference the old name
+const COLORS = NEW_COLORS;
 
 // Advanced Dashboard component with all requested features
 const Dashboard = ({ topics = [] }) => {
@@ -260,7 +268,7 @@ const Dashboard = ({ topics = [] }) => {
                         <YAxis dataKey="name" type="category" width={150} />
                         <Tooltip formatter={(value) => [`${value} tweets`, 'Count']} />
                         <Legend />
-                        <Bar dataKey="value" name="Tweet Count" fill="#0088FE" />
+                        <Bar dataKey="value" name="Tweet Count" fill={NEW_COLORS[0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -290,9 +298,14 @@ const Dashboard = ({ topics = [] }) => {
                           label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                           labelLine={false}
                         >
-                          <Cell fill="#4BC0C0" /> {/* Positive */}
-                          <Cell fill="#FFBB28" /> {/* Neutral */}
-                          <Cell fill="#FF8042" /> {/* Negative */}
+                          {/* Sentiment Colors:
+                              Positive: A distinct, positive color (e.g., green/teal)
+                              Neutral: A neutral color (e.g., yellow/grey)
+                              Negative: The primary color (orange/red)
+                          */}
+                          <Cell fill={NEW_COLORS[4]} /> {/* Positive - #00C49F */}
+                          <Cell fill={NEW_COLORS[5]} /> {/* Neutral - #FFBB28 */}
+                          <Cell fill={NEW_COLORS[0]} /> {/* Negative - #ff4c04 */}
                         </Pie>
                         <Tooltip />
                         <Legend />
@@ -318,7 +331,7 @@ const Dashboard = ({ topics = [] }) => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="count" stroke="#0088FE" name="Total Complaints" />
+                        <Line type="monotone" dataKey="count" stroke={NEW_COLORS[0]} name="Total Complaints" />
                         {/* Could add lines for top topics */}
                       </LineChart>
                     </ResponsiveContainer>

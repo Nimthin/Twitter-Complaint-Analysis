@@ -704,8 +704,8 @@ const SubtopicDashboard = ({ tweets = [], topic, subtopic, onBack }) => {
                       <LineChart data={timeTrendData}>
                         <defs>
                           <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#ff4c04" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#ff4c04" stopOpacity={0}/>
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -732,9 +732,9 @@ const SubtopicDashboard = ({ tweets = [], topic, subtopic, onBack }) => {
                         <Line 
                           type="monotone" 
                           dataKey="count" 
-                          stroke="#8884d8" 
+                          stroke="#ff4c04"
                           strokeWidth={3}
-                          dot={{ r: 4, stroke: '#8884d8', strokeWidth: 2 }}
+                          dot={{ r: 4, stroke: '#ff4c04', strokeWidth: 2 }}
                           activeDot={{ r: 6 }}
                           name="Complaints"
                         />
