@@ -1036,19 +1036,22 @@ footer {
   z-index: 10; /* Ensure sticky header stays on top */
 }
 
-/* Header Badge Adjustment */
-/* If a specific class is added to the badge in Header.js, target that.
-   Otherwise, if it's the only Badge component directly in .navbar .d-flex, this might work:
-   .navbar .d-flex > .badge.bg-info {
-     background-color: #f8f9fa !important; /* Bootstrap's .bg-light color */
-     color: #212529 !important; /* Bootstrap's dark text color */
-   }
-   It's better to modify Header.js to use a more appropriate variant like "light".
-   No direct CSS change for header badge for now, will handle in Header.js if needed.
-*/
-
-
-/* Improved mobile experience & General Responsiveness */
+/* Header Badge Adjustment
+ * 
+ * If a specific class is added to the badge in Header.js, target that.
+ * Otherwise, if it's the only Badge component directly in .navbar .d-flex, this might work:
+ * 
+ * Example CSS (not active):
+ * .navbar .d-flex > .badge.bg-info {
+ *   background-color: #f8f9fa !important;  (Bootstrap's .bg-light color)
+ *   color: #212529 !important;  (Bootstrap's dark text color)
+ * }
+ * 
+ * Note: It's better to modify Header.js to use a more appropriate variant like "light".
+ * No direct CSS change for header badge for now, will handle in Header.js if needed.
+ * 
+ * Improved mobile experience & General Responsiveness
+ */
 
 /* Adjustments for medium screens (tablets, smaller desktops) */
 @media (max-width: 992px) {
@@ -1136,4 +1139,3 @@ footer {
     padding: 0.75rem 1rem;
   }
 }
-
