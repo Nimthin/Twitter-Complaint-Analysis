@@ -25,17 +25,6 @@ const NEW_COLORS = [
 // Fallback for components that might still reference the old name
 const COLORS = NEW_COLORS;
 
-const followerRanges = [
-  { name: '0-100', min: 0, max: 100 },
-  { name: '101-500', min: 101, max: 500 },
-  { name: '501-1k', min: 501, max: 1000 },
-  { name: '1k-5k', min: 1001, max: 5000 },
-  { name: '5k-10k', min: 5001, max: 10000 },
-  { name: '10k-50k', min: 10001, max: 50000 },
-  { name: '50k-100k', min: 50001, max: 100000 },
-  { name: '100k+', min: 100001, max: Infinity }
-];
-
 // Advanced Dashboard component with all requested features
 const Dashboard = ({ topics = [] }) => {
   // State for filters and search
@@ -197,32 +186,6 @@ const Dashboard = ({ topics = [] }) => {
     return subtopics;
   }, [topics]);
 
-  const followerDistributionData = useMemo(() => {
-    if (!allTweets || allTweets.length === 0) {
-      return followerRanges.map(range => ({ name: range.name, count: 0 }));
-    }
-
-    const uniqueUsersFollowers = new Map();
-    allTweets.forEach(tweet => {
-      if (tweet.user && typeof tweet.followers === 'number') {
-        uniqueUsersFollowers.set(tweet.user, tweet.followers);
-      }
-    });
-
-    const distribution = followerRanges.map(range => ({ name: range.name, count: 0 }));
-
-    uniqueUsersFollowers.forEach(followerCount => { // Iterate over Map values (follower counts)
-      for (let i = 0; i < followerRanges.length; i++) {
-        const range = followerRanges[i];
-        if (followerCount >= range.min && followerCount <= range.max) {
-          distribution[i].count++;
-          break;
-        }
-      }
-    });
-    return distribution;
-  }, [allTweets]);
-
   return (
     <Container fluid className="analytics-dashboard py-4">
       
@@ -371,29 +334,6 @@ const Dashboard = ({ topics = [] }) => {
                         <Line type="monotone" dataKey="count" stroke={NEW_COLORS[0]} name="Total Complaints" />
                         {/* Could add lines for top topics */}
                       </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-
-          {/* Follower Distribution Chart */}
-          <Row>
-            <Col lg={12} className="mb-4">
-              <Card className="shadow-sm">
-                <Card.Body>
-                  <h4 className="card-title mb-3">👥 User Follower Distribution</h4>
-                  <div style={{ width: '100%', height: 300 }}>
-                    <ResponsiveContainer>
-                      <BarChart data={followerDistributionData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis allowDecimals={false} />
-                        <Tooltip formatter={(value) => [value, 'Users']} />
-                        <Legend />
-                        <Bar dataKey="count" name="Number of Users" fill={NEW_COLORS[1]} /> {/* Using a color from the palette */}
-                      </BarChart>
                     </ResponsiveContainer>
                   </div>
                 </Card.Body>
