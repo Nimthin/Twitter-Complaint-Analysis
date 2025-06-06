@@ -63,7 +63,7 @@ class DataService {
           { name: 'Basket/Cart Errors', tweetCount: 0, tweets: [] },
           { name: 'Payment Failure', tweetCount: 0, tweets: [] },
           { name: 'Order Confirmation Issues', tweetCount: 0, tweets: [] },
-          { name: 'Other Order/Checkout Issues', tweetCount: 0, tweets: [] } // Replaced 'Address & Shipping Details'
+          { name: 'Address & Shipping Details', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -73,7 +73,7 @@ class DataService {
           { name: 'Late Delivery', tweetCount: 0, tweets: [] },
           { name: 'Lost / Missing Parcel', tweetCount: 0, tweets: [] },
           { name: 'Courier Complaints', tweetCount: 0, tweets: [] },
-          { name: 'Other Delivery Issues', tweetCount: 0, tweets: [] } // Replaced 'International Shipping Fees'
+          { name: 'International Shipping Fees', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -83,7 +83,7 @@ class DataService {
           { name: 'Out of Stock', tweetCount: 0, tweets: [] },
           { name: 'Restock Inquiry', tweetCount: 0, tweets: [] },
           { name: 'Size/Colour Unavailable', tweetCount: 0, tweets: [] },
-          { name: 'General Stock/Preorder Questions', tweetCount: 0, tweets: [] } // Replaced 'Preorders' with a more general one
+          { name: 'Preorders', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -93,7 +93,7 @@ class DataService {
           { name: 'Refund Pending', tweetCount: 0, tweets: [] },
           { name: 'Return Label Issues', tweetCount: 0, tweets: [] },
           { name: 'Exchange Request', tweetCount: 0, tweets: [] },
-          { name: 'Other Returns/Refunds Issues', tweetCount: 0, tweets: [] } // Replaced 'Collection Delay'
+          { name: 'Collection Delay', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -103,7 +103,7 @@ class DataService {
           { name: 'Defective Item', tweetCount: 0, tweets: [] },
           { name: 'Damaged on Arrival', tweetCount: 0, tweets: [] },
           { name: 'Poor Material Quality', tweetCount: 0, tweets: [] },
-          { name: 'Other Quality/Fault Issues', tweetCount: 0, tweets: [] } // Replaced 'Rapid Wear & Tear'
+          { name: 'Rapid Wear & Tear', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -113,7 +113,7 @@ class DataService {
           { name: 'Too Small', tweetCount: 0, tweets: [] },
           { name: 'Too Large', tweetCount: 0, tweets: [] },
           { name: 'Size Guide Mismatch', tweetCount: 0, tweets: [] },
-          { name: 'Other Sizing/Fit Issues', tweetCount: 0, tweets: [] } // Replaced 'Comfort Issues'
+          { name: 'Comfort Issues', tweetCount: 0, tweets: [] }
         ]
       },
       {
@@ -123,156 +123,171 @@ class DataService {
           { name: 'Price Discrepancy', tweetCount: 0, tweets: [] },
           { name: 'Voucher Not Applied', tweetCount: 0, tweets: [] },
           { name: 'Discount Code Request', tweetCount: 0, tweets: [] },
-          { name: 'Other Pricing/Promo Issues', tweetCount: 0, tweets: [] } // Replaced 'Gift Card Problems'
+          { name: 'Gift Card Problems', tweetCount: 0, tweets: [] }
         ]
       },
       {
         name: 'Customer Service Experience',
         tweetCount: 0,
         subtopics: [
-          { name: 'Live Chat Issues', tweetCount: 0, tweets: [] }, // Made more general
-          { name: 'Phone Support Issues', tweetCount: 0, tweets: [] }, // Made more general
-          { name: 'Email/DM Support Issues', tweetCount: 0, tweets: [] }, // Made more general
-          { name: 'General Customer Service Feedback', tweetCount: 0, tweets: [] } // Replaced 'Helpful Staff Praise' to be catch-all
+          { name: 'Live Chat Unresponsive', tweetCount: 0, tweets: [] },
+          { name: 'Phone Wait Times', tweetCount: 0, tweets: [] },
+          { name: 'Email No Response', tweetCount: 0, tweets: [] },
+          { name: 'Helpful Staff Praise', tweetCount: 0, tweets: [] }
         ]
       },
       {
         name: 'Digital Platform Issues',
         tweetCount: 0,
         subtopics: [
-          { name: 'Website Errors/Down', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'App Errors/Crashes', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Login & Account Access Online', tweetCount: 0, tweets: [] }, // Combined 'Login Problems'
-          { name: 'Other Digital Platform Issues', tweetCount: 0, tweets: [] } // Replaced 'Image/Photo Load'
+          { name: 'Website Down', tweetCount: 0, tweets: [] },
+          { name: 'App Crash', tweetCount: 0, tweets: [] },
+          { name: 'Login Problems', tweetCount: 0, tweets: [] },
+          { name: 'Image/Photo Load', tweetCount: 0, tweets: [] }
         ]
       },
       {
         name: 'Furniture Assembly & Parts',
         tweetCount: 0,
         subtopics: [
-          { name: 'Missing Parts/Hardware', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Assembly Difficulty/Instructions', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Damaged Furniture Item', tweetCount: 0, tweets: [] }, // Made more specific
-          { name: 'Other Furniture Issues', tweetCount: 0, tweets: [] } // Replaced 'Replacement Collection Delay'
+          { name: 'Missing Parts', tweetCount: 0, tweets: [] },
+          { name: 'Assembly Difficulty', tweetCount: 0, tweets: [] },
+          { name: 'Damaged Furniture', tweetCount: 0, tweets: [] },
+          { name: 'Replacement Collection Delay', tweetCount: 0, tweets: [] }
         ]
       },
       {
-        name: 'Account & Security (General)', // Added (General) to distinguish from specific online login issues
+        name: 'Account & Security',
         tweetCount: 0,
         subtopics: [
-          { name: 'Unauthorized Charges/Fraud', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Password & Security Concerns', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Data Privacy & Protection', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Other Account/Security Issues', tweetCount: 0, tweets: [] } // Replaced 'Account Access' (can be too broad or covered by login)
+          { name: 'Unauthorized Charge', tweetCount: 0, tweets: [] },
+          { name: 'Password Reset Issues', tweetCount: 0, tweets: [] },
+          { name: 'Data Breach Fears', tweetCount: 0, tweets: [] },
+          { name: 'Account Access', tweetCount: 0, tweets: [] }
         ]
       },
       {
         name: 'Marketing & Communications',
         tweetCount: 0,
         subtopics: [
-          { name: 'Unwanted Mail/Magazine', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Email/SMS Subscription Issues', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Social Media Campaign Feedback', tweetCount: 0, tweets: [] }, // Kept specific
-          { name: 'Other Marketing/Comms Feedback', tweetCount: 0, tweets: [] } // New general
+          { name: 'Unwanted Post/Mail', tweetCount: 0, tweets: [] },
+          { name: 'Email/SMS Spam', tweetCount: 0, tweets: [] },
+          { name: 'Magazine Subscription', tweetCount: 0, tweets: [] },
+          { name: 'Social Media Campaign Feedback', tweetCount: 0, tweets: [] }
         ]
       },
       {
         name: 'Product Information & Queries',
         tweetCount: 0,
         subtopics: [
-          { name: 'Product Code/Availability Request', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Material/Feature/Care Query', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Size/Measurements/Fit Query', tweetCount: 0, tweets: [] }, // Combined
-          { name: 'Other Product Questions', tweetCount: 0, tweets: [] } // Replaced 'Similar Product Request'
+          { name: 'Product Code Request', tweetCount: 0, tweets: [] },
+          { name: 'Material/Feature Query', tweetCount: 0, tweets: [] },
+          { name: 'Similar Product Request', tweetCount: 0, tweets: [] },
+          { name: 'Size/Measurements Inquiry', tweetCount: 0, tweets: [] }
         ]
       },
       {
-        name: 'General Feedback & Other Inquiries', // Renamed topic
+        name: 'Miscellaneous & Other',
         tweetCount: 0,
         subtopics: [
-          { name: 'General Next Feedback (Non-Complaint)', tweetCount: 0, tweets: [] },
-          { name: 'Uncategorized Specific Issues', tweetCount: 0, tweets: [] },
-          { name: 'Social Media Chatter/Greetings', tweetCount: 0, tweets: [] },
-          { name: 'Out of Scope/Irrelevant', tweetCount: 0, tweets: [] }
+          { name: 'Brand Mention Only', tweetCount: 0, tweets: [] },
+          { name: 'General Greetings', tweetCount: 0, tweets: [] },
+          { name: 'Non-Specific Complaint', tweetCount: 0, tweets: [] },
+          { name: 'Off-topic', tweetCount: 0, tweets: [] }
         ]
       }
     ];
 
     // Define keyword mappings for topics and subtopics
     const topicKeywords = {
+      // 1 – Order Placement & Checkout
       'Order Placement & Checkout': [
-        'order', 'checkout', 'basket', 'cart', 'payment', 'purchase', 'transaction', 'buy', 'pay for', 'complete purchase',
-        'card declined', 'confirmation', 'address error', 'unable to pay', 'checkout problem', 'billing issue', 'place order',
-        'checkout page', 'payment screen', 'submit order', 'confirm payment', 'issue buying', 'glitch during order', 'payment method', 'add to bag'
+        'order', 'checkout', 'basket', 'cart', 'payment',
+        'card declined', 'confirmation', 'address error'
       ],
+     
+      // 2 – Delivery & Shipping (incl. international)
       'Delivery & Shipping': [
-        'delivery', 'shipping', 'late delivery', 'parcel', 'courier', 'evri', 'dpd', 'hermes', 'yodel', 'royal mail', 'delivery company',
-        'dispatch delay', 'international shipping', 'saudi', 'riyals', 'where is my order', 'tracking', 'not received', 'estimated delivery',
-        'shipping cost', 'delivery address', 'package', 'when will it arrive', 'shipping update', 'missed delivery'
+        'delivery', 'late delivery', 'parcel', 'courier', 'evri',
+        'dpd', 'dispatch delay', 'international shipping', 'saudi',
+        'riyals'
       ],
+     
+      // 3 – Stock & Availability
       'Stock & Availability': [
-        'out of stock', 'back in stock', 'restock', 'sold out', 'unavailable', 'no stock', 'item unavailable', 'product availability',
-        'size unavailable', 'colour unavailable', 'preorder', 'item available', 'inventory', 'notify me', 'when available',
-        'available soon', 'limited stock', 'low stock', 'check stock'
+        'out of stock', 'back in stock', 'restock', 'sold out',
+        'size unavailable', 'colour unavailable', 'preorder'
       ],
+     
+      // 4 – Returns & Refunds
       'Returns & Refunds': [
-        'return', 'refund', 'refund pending', 'return label', 'exchange', 'collect return', 'send back', 'returning', 'credit',
-        'money back', 'credit note', 'returning item', 'refund status', 'return policy', 'how to return', 'refund process',
-        'exchange policy', 'faulty return', 'incorrect item return'
+        'return', 'refund', 'refund pending', 'return label',
+        'exchange', 'collect return'
       ],
+     
+      // 5 – Product Quality & Faults
       'Product Quality & Faults': [
-        'faulty', 'defective', 'damaged', 'broken', 'peeling', 'torn', 'ripped', 'shrunk', 'faded', 'discoloured', 'poor quality',
-        'boots', 'tights', 'material issue', 'item broke', 'quality issue', 'manufacturing defect', 'not as described', 'wear and tear',
-        'stitching', 'fabric problem', 'item fell apart'
+        'faulty item', 'defective', 'damaged', 'broken', 'peeling',
+        'discoloured', 'poor quality', 'boots', 'tights'
       ],
+     
+      // 6 – Sizing & Fit
       'Sizing & Fit': [
-        'size', 'sizing', 'fit', 'wrong size', 'fit issue', 'too small', 'too tight', 'doesn\'t fit', 'not true to size', 'sizing chart',
-        'too large', 'loose', 'size chart', 'oversized', 'length', 'width', 'comfort', 'sizing guide', 'uncomfortable fit',
-        'half size', 'shoe fit', 'clothing fit', 'runs small', 'runs large'
+        'wrong size', 'fit issue', 'too small', 'too tight',
+        'too large', 'loose', 'size chart', 'oversized'
       ],
+     
+      // 7 – Pricing & Promotions
       'Pricing & Promotions': [
-        'price', 'pricing', 'overcharged', 'discount', 'promotion', 'promo code', 'offer', 'deal', 'code', 'student discount',
-        'voucher code', 'gift card', 'sale price', 'scam', 'price discrepancy', 'charged wrong', 'promotion not applied',
-        'nextpay offer', 'price match', 'loyalty points', 'special offer'
+        'price discrepancy', 'overcharged', 'discount',
+        'voucher code', 'gift card', 'sale price', 'scam'
       ],
+     
+      // 8 – Customer Service Experience
       'Customer Service Experience': [
-        'customer service', 'live chat', 'no response', 'phone queue', 'waiting time', 'staff', 'agent', 'advisor', 'representative',
-        'email reply', 'dm', 'complaints procedure', 'helpful staff', 'unhelpful', 'rude', 'support', 'contact next',
-        'customer care', 'query handling', 'resolution', 'feedback on service'
+        'customer service', 'live chat', 'no response', 'phone queue',
+        'email reply', 'dm', 'complaints procedure', 'helpful staff'
       ],
+     
+      // 9 – Digital Platform Issues
       'Digital Platform Issues': [
-        'website', 'app', 'online', 'error', 'crash', 'login issue', 'password reset', 'glitch', 'bug', 'unable to access',
-        'site down', 'image not loading', 'service unavailable', 'slow website', 'technical problem', 'page not found', '404',
-        'cannot access account', 'payment page error', 'add to cart button not working'
+        'website error', 'app crash', 'login issue', 'password reset',
+        'site down', 'image not loading', 'service unavailable'
       ],
+     
+      // 10 – Furniture Assembly & Parts
       'Furniture Assembly & Parts': [
-        'furniture', 'assembly', 'missing screws', 'holes misaligned', 'instructions', 'parts missing', ' fittings', 'diagram',
-        'cannot assemble', 'return collection', 'damaged furniture', 'flat pack', 'wardrobe build', 'bed assembly', 'table parts',
-        'sofa problem', 'broken part furniture', 'instruction manual'
+        'furniture', 'assembly', 'missing screws', 'holes misaligned',
+        'cannot assemble', 'return collection'
       ],
-      'Account & Security (General)': [
-        'account', 'security', 'unauthorised charge', 'fraud', 'hacked', 'data breach', 'login', 'my account', 'statement',
-        'security breach', 'password issue', 'login problem', 'personal details', 'phishing', 'suspicious email', 'data protection',
-        'account settings', 'unable to login', 'forgot password'
+     
+      // 11 – Account & Security
+      'Account & Security': [
+        'unauthorised charge', 'fraud', 'account hacked',
+        'security breach', 'password reset'
       ],
+     
+      // 12 – Marketing & Communications
       'Marketing & Communications': [
-        'magazine', 'mailing list', 'newsletter', 'promo email', 'sms', 'unsubscribe', 'spam', 'advertising', 'campaign',
-        'trading statement', 'investor', 'advert', 'social media post', 'competition', 'marketing preference', 'stop texts',
-        'receive emails', 'next catalogue', 'brochure'
+        'magazine', 'mailing list', 'newsletter', 'promo email',
+        'sms', 'trading statement', 'investor'
       ],
+     
+      // 13 – Product Information & Queries
       'Product Information & Queries': [
-        'product code', 'how much', 'what are', 'similar to', 'alternative for', 'details about', 'information on', 'product details',
-        'material', 'dimensions', 'instructions', 'manual', 'care instructions', 'origin', 'product query', 'item specifics',
-        'wash guide', 'weight limit', 'compatibility'
+        'product code', 'how much', 'what are', 'similar',
+        'material', 'dimensions', 'instructions', 'manual'
       ],
-      'General Feedback & Other Inquiries': [
-        'feedback', 'suggestion', 'question for next', 'enquiry', 'general query', 'comment', 'general feedback', 'next plc',
-        'love next', 'great service', 'idea', 'appreciation', 'compliment', 'store query', 'opening hours', 'general help'
+     
+      // 14 – Miscellaneous & Other
+      'Miscellaneous & Other': [
+        'nextofficial', 'sleep', 'okay hun', 'general comment'
       ]
     };
      
     const subtopicKeywords = {
       // Order Placement & Checkout
+
       'Basket/Cart Errors': ['basket error', 'cart issue', 'cannot add to basket', 'bag problem', 'item disappeared', 'can\'t update quantity', 'remove item from cart', 'checkout bag', 'unable to add to cart', 'basket not updating', 'cart empty after adding', 'checkout showing wrong items', 'can\'t change quantity in basket', 'remove from basket failed', 'error code basket', 'shopping bag problem', 'items won\'t add', 'basket glitch', 'problem with my bag', 'checkout basket issue'],
       'Payment Failure': ['payment failed', 'card declined', 'transaction failed', 'payment rejected', 'card not working', 'payment error', 'unable to complete payment', 'payment issue', 'sagepay', 'paypal issue', 'payment unsuccessful', 'card error', 'payment gateway problem', 'declined payment', 'payment method not accepted', 'issue paying', 'bank declined', 'payment not going through'],
       'Order Confirmation Issues': ['no confirmation email', 'order confirmation missing', 'no tracking number', 'didn\'t get order number', 'order status unknown', 'email confirmation not received', 'order not showing', 'order went through?', 'confirmation page error', 'order number not provided', 'tracking link missing', 'order details incorrect in confirmation', 'payment taken but no confirmation', 'order history empty'],
@@ -338,23 +353,90 @@ class DataService {
       'Data Privacy & Protection': ['data breach fear next', 'privacy concern handling my data', 'personal information security query', 'gdpr request next', 'data protection issue complaint', 'how is my data used', 'selling my data?', 'privacy policy query', 'right to be forgotten', 'subject access request', 'data security next'],
       'Other Account/Security Issues': ['account problem other', 'security issue general', 'general account question'],
 
+=======
+      'Basket/Cart Errors': ['basket error', 'cart issue', 'cannot add to basket'],
+      'Payment Failure': ['payment failed', 'card declined', 'transaction failed'],
+      'Order Confirmation Issues': ['no confirmation email', 'order confirmation missing', 'no tracking number'],
+      'Address & Shipping Details': ['address error', 'address not recognised', 'wrong address'],
+     
+      // Delivery & Shipping
+      'Late Delivery': ['late delivery', 'delivery delay', 'still waiting'],
+      'Lost / Missing Parcel': ['lost parcel', 'parcel missing', 'parcel not arrived'],
+      'Courier Complaints': ['courier delay', 'evri', 'dpd', 'driver issue'],
+      'International Shipping Fees': ['international shipping', 'shipping fee', 'saudi', 'riyals'],
+     
+      // Stock & Availability
+      'Out of Stock': ['out of stock', 'sold out', 'no stock'],
+      'Restock Inquiry': ['back in stock', 'restock', 'coming soon'],
+      'Size/Colour Unavailable': ['size unavailable', 'colour unavailable', 'missing size'],
+      'Preorders': ['preorder', 'pre-order', 'release date'],
+     
+      // Returns & Refunds
+      'Refund Pending': ['refund pending', 'waiting for refund', 'money back'],
+      'Return Label Issues': ['return label', 'label not received', 'qr code'],
+      'Exchange Request': ['exchange', 'swap item', 'replacement'],
+      'Collection Delay': ['collection delay', 'courier collection', 'pick-up delay'],
+     
+      // Product Quality & Faults
+      'Defective Item': ['faulty item', 'defective', 'not working'],
+      'Damaged on Arrival': ['damaged', 'broken', 'arrived damaged'],
+      'Poor Material Quality': ['poor quality', 'thin material', 'peeling', 'discoloured'],
+      'Rapid Wear & Tear': ['wear quickly', 'fluff', 'bobbling', 'tights tear'],
+     
+      // Sizing & Fit
+      'Too Small': ['too small', 'tight fit', 'snug'],
+      'Too Large': ['too large', 'very loose', 'oversized'],
+      'Size Guide Mismatch': ['size chart', 'size guide incorrect', 'chart misleading'],
+      'Comfort Issues': ['uncomfortable', 'digging in', 'itchy'],
+     
+      // Pricing & Promotions
+      'Price Discrepancy': ['price discrepancy', 'incorrect price', 'price changed'],
+      'Voucher Not Applied': ['voucher not applied', 'code invalid', 'promo code fail'],
+      'Discount Code Request': ['discount code', 'voucher code', 'need code'],
+      'Gift Card Problems': ['gift card', 'gift balance', 'card not accepted'],
+     
+      // Customer Service Experience
+      'Live Chat Unresponsive': ['live chat', 'chat not working', 'chat queue'],
+      'Phone Wait Times': ['call waiting', 'on hold', 'phone queue'],
+      'Email No Response': ['no response email', 'email unanswered', 'waiting for reply'],
+      'Helpful Staff Praise': ['helpful staff', 'brilliant service', 'thank you'],
+     
+      // Digital Platform Issues
+      'Website Down': ['website down', 'site offline', 'page not loading'],
+      'App Crash': ['app crash', 'app error', 'app freezing'],
+      'Login Problems': ['login issue', 'cannot log in', 'password reset'],
+      'Image/Photo Load': ['image not loading', 'photo missing', 'clearance section no photos'],
+     
+      // Furniture Assembly & Parts
+      'Missing Parts': ['missing screws', 'parts missing', 'hardware missing'],
+      'Assembly Difficulty': ['holes misaligned', 'cannot assemble', 'assembly issue'],
+      'Damaged Furniture': ['damaged furniture', 'scratched', 'broken leg'],
+      'Replacement Collection Delay': ['replacement delay', 'collection delay', 'courier collection'],
+     
+      // Account & Security
+      'Unauthorized Charge': ['unauthorised charge', 'unknown charge', 'fraudulent'],
+      'Password Reset Issues': ['password reset', 'reset link', 'cannot reset'],
+      'Data Breach Fears': ['data breach', 'security breach', 'privacy concern'],
+      'Account Access': ['account locked', 'cannot access account', 'account hacked'],
+     
+
       // Marketing & Communications
-      'Unwanted Mail/Magazine': ['unwanted next magazine', 'stop mailing list next', 'post permission change request', 'remove from next postal marketing', 'too much junk mail from next', 'catalogue not requested', 'stop sending brochures', 'reduce paper mail', 'opt out of physical mail', 'unsolicited mail'],
-      'Email/SMS Subscription Issues': ['next promo email unsubscribe link not working', 'next sms spam stop messages', 'cannot unsubscribe next emails', 'too many marketing messages from next', 'subscription management next account', 'opt out marketing emails/sms', 'still getting emails after unsubscribe', 'report spam next', 'communication preferences update fail'],
-      'Social Media Campaign Feedback': ['next campaign feedback', 'next advertisement comment', 'next social media ad query', 'next influencer post reaction', 'marketing message opinion next', 'competition entry next query', 'response to your post', 'advert misleading', 'love the new ad', 'social media content feedback'],
-      'Other Marketing/Comms Feedback': ['marketing issue other', 'communication problem general', 'general comms query'],
-
+      'Unwanted Post/Mail': ['magazine', 'mailing list', 'post permission'],
+      'Email/SMS Spam': ['promo email', 'sms spam', 'unsubscribe'],
+      'Magazine Subscription': ['magazine subscription', 'catalogue', 'brochure'],
+      'Social Media Campaign Feedback': ['campaign', 'ad', 'marketing'],
+     
       // Product Information & Queries
-      'Product Code/Availability Request': ['product code needed for item', 'item number request specific product', 'is this in stock in my local store', 'online availability check specific item', 'style number for dress/shoes', 'reference number for product', 'catalogue number', 'stock check in particular shop', 'can I find this in store'],
-      'Material/Feature/Care Query': ['what material is this made of', 'fabric composition details', 'product features question specific item', 'washing instructions for garment', 'care guide for product', 'product origin query made where', 'is it waterproof/leather/cotton', 'sustainability of material', 'ethical sourcing query', 'allergy information material', 'product specification details'],
-      'Size/Measurements/Fit Query': ['measurements needed for furniture/clothing', 'dimensions of item please', 'strap length query bag/dress', 'inseam length trousers', 'product fit question specific style', 'size details needed before buy', 'chest/waist/hip measurement', 'model height in photo', 'size conversion chart query', 'compare sizes', 'which size for me'],
-      'Other Product Questions': ['product information other', 'item query general', 'general question about product item'],
-
-      // General Feedback & Other Inquiries
-      'General Next Feedback (Non-Complaint)': ['love next products', 'great service from next', 'suggestion for next website/app', 'idea for new product range', 'positive feedback general', 'appreciate next customer care', 'compliment for next team', 'highly recommend next', 'impressed with next', 'next is my favorite', 'kudos to next team', 'fantastic experience', 'very happy with purchase', 'excellent quality as always', 'big fan of next', 'shoutout to next', 'next always delivers', 'great job next', 'positive comment', 'happy customer'],
-      'Uncategorized Specific Issues': ['specific problem unspecified', 'issue not covered', 'complaint no category', 'unclear what is wrong', 'assistance needed strange issue', 'problem i have', 'issue not sure where fits', 'general problem next', 'another issue', 'different problem'],
-      'Social Media Chatter/Greetings': ['hello next team', 'hi next official', 'thanks next for help', 'good morning next social', '@nextofficial how are you today', 'general social media mention positive/neutral', 'okay hun', 'hope you are well team', 'just saying hi', 'nextfashion', 'hey next', 'yo next', 'whatsup next', 'just saying hello', 'quick hi', 'hope everyone at next is well', 'next team rocks', 'big up next', 'nice one next', 'thanks for the update next', 'good to see next', 'waves at next'],
-      'Out of Scope/Irrelevant': ['spam message unrelated', 'unrelated question to next', 'wrong company contacted sorry', 'not about next products/service', 'job application query', 'lottery win message ignore', 'random comment', 'political comment', 'selling something', 'looking for different brand', 'this isn\'t about Next', 'ignore this message', 'test tweet']
+      'Product Code Request': ['product code', 'code please', 'code number'],
+      'Material/Feature Query': ['material', 'fabric', 'features'],
+      'Similar Product Request': ['similar', 'like this', 'alternative'],
+      'Size/Measurements Inquiry': ['measurements', 'dimensions', 'strap length'],
+     
+      // Miscellaneous & Other
+      'Brand Mention Only': ['nextofficial'],
+      'General Greetings': ['hello', 'hi', 'hun'],
+      'Non-Specific Complaint': ['poor show', 'disappointed', 'unhappy'],
+      'Off-topic': ['sleep', 'try again tomorrow']
     };
 
     // Categorize tweets into topics and subtopics
@@ -385,99 +467,51 @@ class DataService {
 
     // Process each normalized tweet
     normalizedTweets.forEach(tweet => {
-        const text = tweet.text.toLowerCase();
-        let tweetSuccessfullyCategorized = false;
+      const text = tweet.text.toLowerCase();
+      let topicMatched = false;
 
-        for (const topicEntry of topics) {
-            const topicName = topicEntry.name;
-            const currentTopicKeywords = topicKeywords[topicName] || [];
+      for (const [topicName, keywords] of Object.entries(topicKeywords)) {
+        if (keywords.some(keyword => text.includes(keyword))) {
+          const topic = topics.find(t => t.name === topicName);
+          if (!topic) {
+            console.warn(`Topic '${topicName}' not found in predefined topics.`);
+            continue;
+          }
+          topic.tweetCount++;
 
-            if (currentTopicKeywords.some(keyword => text.includes(keyword))) {
-                // --- Topic keywords matched for topicEntry ---
-                let subtopicAssignedForThisTopic = false;
-
-                // 1. Attempt to match a specific subtopic using its keywords
-                for (const subtopicData of topicEntry.subtopics) {
-                    const subtopicKeywordsForCurrent = subtopicKeywords[subtopicData.name] || [];
-                    if (subtopicKeywordsForCurrent.length > 0 && subtopicKeywordsForCurrent.some(subKeyword => text.includes(subKeyword))) {
-                        topicEntry.tweetCount++;
-                        subtopicData.tweetCount++;
-                        subtopicData.tweets.push(tweet);
-                        subtopicAssignedForThisTopic = true;
-                        break; // Exit subtopic loop for this topic
-                    }
-                }
-
-                // 2. If no specific subtopic was matched by keywords, assign to the general subtopic
-                if (!subtopicAssignedForThisTopic) {
-                    // Construct search terms for general subtopics based on the parent topic name
-                    // E.g., for "Order Placement & Checkout", search for "Other Order", "General Order"
-                    const baseTopicNameForSearch = topicName.toLowerCase().split(" & ")[0].split(" ")[0];
-                    let generalSubtopic = topicEntry.subtopics.find(st =>
-                        st.name.startsWith("Other ") ||
-                        st.name.startsWith("General ") ||
-                        (st.name.toLowerCase().includes("other ") && st.name.toLowerCase().includes(baseTopicNameForSearch)) ||
-                        (st.name.toLowerCase().includes("general ") && st.name.toLowerCase().includes(baseTopicNameForSearch))
-                    );
-
-                    if (!generalSubtopic && topicEntry.subtopics.length > 0) {
-                        // Fallback: assume the last subtopic is the general one if no specific naming convention matches
-                        generalSubtopic = topicEntry.subtopics[topicEntry.subtopics.length - 1];
-                    }
-
-                    if (generalSubtopic) {
-                        topicEntry.tweetCount++;
-                        generalSubtopic.tweetCount++;
-                        generalSubtopic.tweets.push(tweet);
-                        subtopicAssignedForThisTopic = true;
-                    } else {
-                        // This condition means the topic (whose keywords matched) has no subtopics. This is a structural data issue.
-                        console.warn(`Tweet matched topic '${topicName}' keywords but the topic has no subtopics or general subtopic identified. Tweet: ${text}`);
-                        // Do not set subtopicAssignedForThisTopic = true; the tweet is not truly categorized within this problematic topic.
-                        // The outer loop will continue to check if other topics might match this tweet.
-                    }
-                }
-
-                // If the tweet was successfully assigned to a subtopic (specific or general) under this topic,
-                // then we are done with this tweet according to "first topic wins".
-                if (subtopicAssignedForThisTopic) {
-                    tweetSuccessfullyCategorized = true;
-                    break; // Exit the main topic loop (for...of topics)
-                }
-                // If subtopicAssignedForThisTopic is still false here, it means:
-                // - The topic's keywords matched.
-                // - BUT, it couldn't be placed into any of its subtopics (e.g., topic has no subtopics - data error).
-                // The loop continues to check if OTHER topics might match this tweet. This is a deviation from strict "first topic wins"
-                // but is more robust if the first matching topic is malformed (e.g. no subtopics).
+          for (const [subtopicName, subKeywords] of Object.entries(subtopicKeywords)) {
+            if (subKeywords.some(subKeyword => text.includes(subKeyword))) {
+              const subtopic = topic.subtopics.find(s => s.name === subtopicName);
+              if (!subtopic) {
+                console.warn(`Subtopic '${subtopicName}' not found in topic '${topicName}'.`);
+                continue;
+              }
+              subtopic.tweetCount++;
+              subtopic.tweets.push(tweet);
+              topicMatched = true;
+              break;
             }
-        }
+          }
 
-        // If, after checking all topics, the tweet was not successfully categorized
-        if (!tweetSuccessfullyCategorized) {
-            const fallbackTopic = topics.find(t => t.name === 'General Feedback & Other Inquiries');
-            if (fallbackTopic) {
-                const uncategorizedSubtopic = fallbackTopic.subtopics.find(st => st.name === 'Uncategorized Specific Issues');
-                if (uncategorizedSubtopic) {
-                    fallbackTopic.tweetCount++;
-                    uncategorizedSubtopic.tweetCount++;
-                    uncategorizedSubtopic.tweets.push(tweet);
-                } else {
-                    // Fallback if 'Uncategorized Specific Issues' subtopic is not found
-                    if (fallbackTopic.subtopics.length > 0) {
-                        fallbackTopic.tweetCount++;
-                        fallbackTopic.subtopics[0].tweetCount++;
-                        fallbackTopic.subtopics[0].tweets.push(tweet);
-                        console.warn("Fallback to first subtopic of 'General Feedback & Other Inquiries' due to missing 'Uncategorized Specific Issues' subtopic. Tweet: " + text);
-                    } else {
-                        // This state should be highly unlikely if the topic structure is correctly set up.
-                        console.error("'General Feedback & Other Inquiries' topic has NO subtopics for fallback. Tweet unassigned: " + text);
-                    }
-                }
-            } else {
-                // This state indicates a critical error in the predefined topic structure.
-                console.error("'General Feedback & Other Inquiries' topic not found for fallback! Tweet unassigned: " + text);
-            }
+          if (!topicMatched && topic.subtopics[0]) {
+            topic.subtopics[0].tweetCount++;
+            topic.subtopics[0].tweets.push(tweet);
+            topicMatched = true;
+          }
+          break;
         }
+      }
+
+      if (!topicMatched) {
+        const otherTopic = topics.find(t => t.name === 'Miscellaneous & Other');
+        if (otherTopic && otherTopic.subtopics[0]) {
+          otherTopic.tweetCount++;
+          otherTopic.subtopics[0].tweetCount++;
+          otherTopic.subtopics[0].tweets.push(tweet);
+        } else {
+          console.warn('Miscellaneous & Other topic or its first subtopic not found.');
+        }
+      }
     });
 
     return topics;
