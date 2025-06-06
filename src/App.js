@@ -18,32 +18,52 @@ const Dashboard = lazy(() => import('./components/Dashboard'));
 // Memoized Topic Card component
 const TopicCard = memo(({ topic, onSelect }) => (
   <div className="topic-card" onClick={() => onSelect(topic)}>
-    <div className="topic-title">{topic.name}</div>
-    <div className="topic-count">{topic.tweetCount} tweets</div>
+    <div className="card-content">
+      <h5 className="topic-title">{topic.name}</h5>
+      <p className="topic-count">{topic.tweetCount} tweets</p>
+    </div>
+    <div className="card-arrow">
+      <i className="bi bi-arrow-right-circle"></i>
+    </div>
   </div>
 ));
 
 // Memoized Subtopic Card component
 const SubtopicCard = memo(({ subtopic, onSelect }) => (
   <div className="subtopic-card" onClick={() => onSelect(subtopic)}>
-    <div className="subtopic-title">{subtopic.name}</div>
-    <div className="subtopic-count">{subtopic.tweetCount} tweets</div>
+    <div className="card-content">
+      <h5 className="subtopic-title">{subtopic.name}</h5>
+      <p className="subtopic-count">{subtopic.tweetCount} tweets</p>
+    </div>
+    <div className="card-arrow">
+      <i className="bi bi-arrow-right-circle"></i>
+    </div>
   </div>
 ));
 
 // Memoized Tweet Card component
 const TweetCard = memo(({ tweet }) => (
   <div className="tweet-card">
-    <div className="tweet-user">{tweet.user}</div>
-    <div className="tweet-text">{tweet.text}</div>
-    <div className="tweet-date">{tweet.date}</div>
-    <div className="tweet-meta">
-      <span>Likes: {tweet.likes}</span>
-      <span>Retweets: {tweet.retweets}</span>
+    <div className="tweet-header">
+      <span className="tweet-user">{tweet.user || 'Anonymous'}</span>
+      <span className="tweet-date">{new Date(tweet.date).toLocaleDateString()}</span>
     </div>
-    {tweet.url && tweet.url !== '#' && (
-      <a href={tweet.url} target="_blank" rel="noopener noreferrer">View Tweet</a>
-    )}
+    <div className="tweet-body">
+      <p className="tweet-text">{tweet.text}</p>
+    </div>
+    <div className="tweet-footer">
+      <div className="tweet-meta">
+        <span><i className="bi bi-heart-fill"></i> {tweet.likes || 0}</span>
+        <span><i className="bi bi-arrow-repeat"></i> {tweet.retweets || 0}</span>
+        {/* Assuming views might be available, adding placeholder */}
+        {/* <span><i className="bi bi-eye-fill"></i> {tweet.views || 0}</span> */}
+      </div>
+      {tweet.url && tweet.url !== '#' && (
+        <a href={tweet.url} target="_blank" rel="noopener noreferrer" className="tweet-link">
+          <i className="bi bi-box-arrow-up-right"></i> View on Twitter
+        </a>
+      )}
+    </div>
   </div>
 ));
 

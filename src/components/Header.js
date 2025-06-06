@@ -45,7 +45,7 @@ const Header = memo(({ view, onBack, topic, subtopic, viewMode = 'analytics', on
           )}
           
           {(currentView !== 'dashboard' && viewMode !== 'analytics') && (
-            <Badge bg="info" className="ms-2">
+            <Badge bg="light" text="dark" className="ms-2"> {/* Changed bg to light and explicitly set text to dark for contrast */}
               {currentView === 'tweets' ? 'Viewing Tweets' : 'Viewing Subtopics'}
             </Badge>
           )}

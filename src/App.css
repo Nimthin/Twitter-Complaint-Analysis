@@ -19,7 +19,7 @@ body {
 .navbar {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 1rem 0;
-  background: linear-gradient(90deg, #1a202c 0%, #2d3748 100%);
+  background: var(--primary-color);
 }
 
 .navbar-brand {
@@ -34,7 +34,7 @@ body {
 .navbar-brand i {
   font-size: 1.75rem;
   margin-right: 0.75rem;
-  color: #38b2ac;
+  color: #fff; /* Ensure icon contrasts with primary color background */
 }
 
 /* Dashboard Layout */
@@ -60,98 +60,97 @@ body {
   left: 0;
   width: 50px;
   height: 4px;
-  background: #38b2ac;
+  background: var(--primary-color);
   border-radius: 2px;
 }
 
 /* Topics Grid */
 .topics-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 1.5rem; /* Spacing between cards */
+  padding: 1rem; /* Padding around the grid */
   margin-bottom: 2rem;
 }
 
-.topic-card {
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.topic-card, .subtopic-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
+  display: flex; /* For internal alignment */
+  flex-direction: row; /* Align content and arrow side-by-side */
+  justify-content: space-between; /* Push arrow to the end */
+  align-items: center; /* Vertically align content and arrow */
 }
 
-.topic-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border-color: #38b2ac;
+.topic-card:hover, .subtopic-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
 }
 
-.topic-title {
-  font-size: 1.25rem;
+.card-content {
+  flex-grow: 1; /* Allow content to take available space */
+  text-align: left;
+}
+
+.topic-title, .subtopic-title { /* Applied to h5 */
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #1a202c;
+  color: #333;
+  margin-bottom: 0.25rem; /* Reduced margin for p following h5 */
 }
 
-.topic-count {
-  color: #718096;
-  font-size: 0.875rem;
-  margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid #e2e8f0;
-  margin-top: 0.75rem;
+.topic-count, .subtopic-count { /* Applied to p */
+  font-size: 0.9rem;
+  color: #757575;
+  margin-bottom: 0; /* Remove default p margin if not needed */
+  border-top: none; /* Removed from previous style */
+  margin-top: 0; /* Removed from previous style */
+  padding-top: 0; /* Removed from previous style */
 }
+
+.card-arrow {
+  font-size: 1.5rem; /* Size of the arrow icon */
+  color: #cccccc; /* Muted color for the arrow */
+  transition: color 0.3s ease;
+  margin-left: 1rem; /* Space between content and arrow */
+}
+
+.topic-card:hover .card-arrow, .subtopic-card:hover .card-arrow {
+  color: var(--primary-color); /* Arrow color changes on card hover */
+}
+
 
 /* Subtopics Container */
+/* .subtopics-list is the overall container for the "Subtopics in X" view */
 .subtopics-list {
-  padding: 2rem 1rem;
+  padding: 1rem; /* Adjusted padding based on new design */
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.subtopics-container {
+/* .subtopics-list .subtopics-list in App.js is the actual grid container */
+/* Targeting the nested structure for subtopic cards grid */
+.subtopics-list > .subtopics-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 1.5rem; /* Spacing between cards */
+  /* padding: 1rem; /* Padding around the grid - parent .subtopics-list has padding */
+}
+
+/* If there's a .subtopics-container class used in HTML, style it here */
+/* For now, assuming the nested .subtopics-list is the target */
+.subtopics-container { /* This class was in original CSS, ensure it's covered or removed if not used */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
-.subtopic-card {
-  background: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-}
-
-.subtopic-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border-color: #38b2ac;
-}
-
-.subtopic-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #1a202c;
-}
-
-.subtopic-count {
-  color: #718096;
-  font-size: 0.875rem;
-  margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid #e2e8f0;
-  margin-top: 0.75rem;
-}
 
 /* Tweets Container */
 .tweets-container {
@@ -237,8 +236,8 @@ body {
 }
 
 .subtopic-dashboard .nav-tabs .nav-link.active {
-  color: #3182ce;
-  border-bottom: 3px solid #3182ce;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
   background-color: transparent;
 }
 
@@ -399,71 +398,109 @@ body {
   background: white;
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 3px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  padding-left: calc(1.25rem - 3px); /* Adjust padding to account for border */
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
 }
 
 .tweet-card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.tweet-user {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #1a202c;
+.tweet-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-
-.tweet-user:before {
-  content: '@';
-  color: #38b2ac;
-  margin-right: 0.25rem;
-}
-
-.tweet-text {
-  white-space: pre-line;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  word-break: break-word;
-  font-size: 0.95rem;
-  flex-grow: 1;
-}
-
-.tweet-date {
-  color: #718096;
-  font-size: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
-.tweet-meta {
+.tweet-user {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.05rem;
+}
+/* Remove .tweet-user:before if not desired with new structure */
+.tweet-user:before {
+  content: ""; /* Clear previous @ symbol if not wanted */
+  margin-right: 0;
+}
+
+
+.tweet-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.tweet-body {
+  margin-bottom: 0.75rem;
+}
+
+.tweet-text {
+  color: #555;
+  line-height: 1.6;
+  white-space: pre-line; /* Keep for multi-line text */
+  word-break: break-word; /* Keep for long words */
+  font-size: 0.95rem; /* Keep existing font size */
+}
+
+.tweet-footer {
   display: flex;
   justify-content: space-between;
-  font-size: 0.75rem;
-  color: #718096;
+  align-items: center;
+  margin-top: 1rem;
   padding-top: 0.75rem;
-  border-top: 1px solid #e2e8f0;
-  margin-top: 0.75rem;
+  border-top: 1px solid #eee;
 }
 
-.tweet-card a {
-  display: inline-block;
-  margin-top: 0.75rem;
-  color: #38b2ac;
+.tweet-meta span {
+  margin-right: 1.25rem; /* Increased spacing */
+  font-size: 0.85rem;
+  color: #777;
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
+}
+
+.tweet-meta span i {
+  margin-right: 0.4rem; /* Space between icon and text */
+  color: var(--primary-color); /* Use primary color for icons */
+  font-size: 0.9em; /* Slightly smaller icon if needed */
+}
+.tweet-meta span:last-child {
+  margin-right: 0;
+}
+
+.tweet-link { /* Class for the "View on Twitter" link */
+  color: var(--primary-color);
   text-decoration: none;
-  font-size: 0.875rem;
   font-weight: 500;
-  transition: color 0.2s;
+  font-size: 0.85rem;
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
 }
 
-.tweet-card a:hover {
-  color: #2c7a7b;
-  text-decoration: underline;
+.tweet-link i {
+  margin-right: 0.3rem;
 }
+
+.tweet-link:hover {
+  text-decoration: underline;
+  color: color-mix(in srgb, var(--primary-color) 85%, black); /* Darken on hover */
+}
+
+
+/* Container for tweets if needed, from SubtopicDashboard.js */
+.tweet-list {
+  /* If it's a direct list, margin on tweet-card handles spacing.
+     If it's a grid, define grid properties here.
+     For now, assuming vertical list. */
+}
+
 
 /* Loading and Error States */
 .no-tweets-message {
@@ -520,7 +557,7 @@ body {
 }
 
 .border-primary {
-  border-left: 4px solid #0d6efd !important;
+  border-left: 4px solid var(--primary-color) !important;
 }
 
 /* Tab Navigation */
@@ -545,10 +582,10 @@ body {
 }
 
 .nav-tabs .nav-link.active {
-  color: #0d6efd;
+  color: var(--primary-color);
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #0d6efd;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 /* List Group Items */
@@ -586,21 +623,56 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .topics-list, .subtopics-container, .tweets-container {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+/* Responsive Design for Topic and Subtopic Grids */
+@media (max-width: 1200px) { /* Large tablets and small desktops */
+  .topics-list, .subtopics-list > .subtopics-list, .subtopics-container {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
+}
+
+@media (max-width: 992px) { /* Tablets */
+  .topics-list, .subtopics-list > .subtopics-list, .subtopics-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Original media query for 768px adjusted, specific for topic/subtopic lists */
+@media (max-width: 768px) {
+  .topics-list, .subtopics-list > .subtopics-list, .subtopics-container {
+    grid-template-columns: repeat(2, 1fr); /* Or 1 if cards are wide */
+  }
+  /* Other existing 768px rules */
+  .tweets-container { /* Keep this from original if it's separate */
+     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
   .dashboard h2, .subtopics-list h3, .tweets-container h4 {
     font-size: 1.5rem;
   }
-  
-  .topic-title, .subtopic-title {
-    font-size: 1.125rem;
+  .topic-title, .subtopic-title { /* Title inside cards */
+    font-size: 1rem; /* Adjusted for potentially smaller cards */
   }
-  
-  .tweet-card {
+  .tweet-card { /* Keep this from original */
     padding: 1.25rem;
+  }
+}
+
+@media (max-width: 576px) { /* Mobile phones */
+  .topics-list, .subtopics-list > .subtopics-list, .subtopics-container {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+    gap: 0.75rem;
+  }
+  .topic-card, .subtopic-card { /* Adjust padding for smaller cards if needed */
+    padding: 1rem;
+    flex-direction: column; /* Stack content and arrow vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+  .card-arrow {
+    margin-left: 0; /* Remove left margin */
+    margin-top: 0.5rem; /* Add space above arrow */
+    align-self: flex-end; /* Push arrow to the end in column layout */
+  }
+  .topic-title, .subtopic-title { /* Title inside cards */
+    font-size: 1.05rem;
   }
 }
 
@@ -652,9 +724,11 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.tweet-card {
+/* Ensure existing animation for tweet cards still applies if class name is the same */
+.tweet-card.animation\:fadeIn { /* If animation class is separate */
   animation: fadeIn 0.3s ease-out forwards;
 }
+/* If animation is directly on .tweet-card, it's already covered */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -692,7 +766,14 @@ footer {
   line-height: 1.5;
 }
 
-/* Modern card hover effects */
+/* Modern card hover effects - This was a general .tweet-card style.
+   The new .tweet-card style is more specific.
+   If this was intended for a different type of tweet card (e.g. on a dashboard),
+   it might need its own class or be reconciled.
+   For now, the new .tweet-card style will take precedence due to ordering or if old one is removed.
+   Removing the duplicate .tweet-card definition below to avoid confusion.
+*/
+/*
 .tweet-card {
   transition: all 0.3s ease;
   border-radius: 12px;
@@ -706,7 +787,7 @@ footer {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
-
+*/
 .transition-all {
   transition: all 0.3s ease;
 }
@@ -741,14 +822,39 @@ footer {
 }
 
 .btn-outline-primary:hover {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white !important; /* Added for better contrast on primary background, ensure override */
+}
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black) !important; /* Darken primary color */
+  border-color: color-mix(in srgb, var(--primary-color) 80%, black) !important; /* Darken primary color */
+  color: white !important;
+}
+
+.spinner-border-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.progress-bar {
+  background-color: var(--primary-color) !important;
 }
 
 /* Custom form controls */
 .form-control:focus, .form-select:focus {
-  border-color: #86b7fe;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+  border-color: var(--primary-color); /* Adjusted to primary color focus */
+  box-shadow: 0 0 0 0.25rem rgba(255, 76, 4, 0.15); /* Adjusted shadow to primary color */
 }
 
 /* Custom alert styles */
@@ -760,9 +866,9 @@ footer {
 }
 
 .alert-info {
-  background-color: #e7f5ff;
-  border-left-color: #339af0;
-  color: #1864ab;
+  background-color: #ffeadd; /* Lighter shade of primary color */
+  border-left-color: var(--primary-color);
+  color: #c53b02; /* Darker shade of primary color for text */
 }
 
 .alert-danger {
@@ -837,10 +943,15 @@ footer {
   padding: 10px 16px;
 }
 
-/* Tweet Cards */
+/* The .tweet-card specific styling from lines 843-856 (in the original file)
+   had a different border and hover effect.
+   The new .tweet-card style defined earlier (around line ~400) will be used.
+   This section is now redundant due to the more comprehensive .tweet-card styling above.
+*/
+/*
 .tweet-card {
   margin-bottom: 20px;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid var(--primary-color);
   border-radius: 8px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -854,6 +965,7 @@ footer {
 .tweet-card .card-body {
   padding: 20px;
 }
+*/
 
 /* Search and filter section */
 .search-filter-container {
@@ -907,19 +1019,121 @@ footer {
   animation: pulse 1.5s infinite;
 }
 
-/* Improved mobile experience */
+/* TopicComplaintMatrix Table Styles */
+.topic-complaint-matrix .matrix-table thead th {
+  background-color: var(--primary-color);
+  color: white;
+  border-bottom-width: 0; /* Remove default bottom border to avoid double with sticky header shadow */
+}
+
+.topic-complaint-matrix .matrix-table th,
+.topic-complaint-matrix .matrix-table td {
+  border: 1px solid #dee2e6; /* Standard bootstrap table border color */
+  vertical-align: middle;
+}
+
+.topic-complaint-matrix .sticky-top {
+  z-index: 10; /* Ensure sticky header stays on top */
+}
+
+/* Header Badge Adjustment */
+/* If a specific class is added to the badge in Header.js, target that.
+   Otherwise, if it's the only Badge component directly in .navbar .d-flex, this might work:
+   .navbar .d-flex > .badge.bg-info {
+     background-color: #f8f9fa !important; /* Bootstrap's .bg-light color */
+     color: #212529 !important; /* Bootstrap's dark text color */
+   }
+   It's better to modify Header.js to use a more appropriate variant like "light".
+   No direct CSS change for header badge for now, will handle in Header.js if needed.
+*/
+
+
+/* Improved mobile experience & General Responsiveness */
+
+/* Adjustments for medium screens (tablets, smaller desktops) */
+@media (max-width: 992px) {
+  /* Example: Slightly reduce padding for main containers if needed */
+  .dashboard,
+  .topics-list, /* This is the grid container, padding is on it */
+  .subtopics-list, /* This is the outer view container */
+  .subtopic-dashboard { /* Root class in SubtopicDashboard.js */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Adjustments for small screens (tablets in portrait, large phones) */
 @media (max-width: 768px) {
-  .content-area {
+  body {
+    font-size: 15px; /* Slightly smaller base font */
+  }
+  h1 { font-size: 2rem; } /* Adjust if h1 is used */
+  /* h2, h3 are already adjusted in a more specific rule below, keeping that */
+  /* .dashboard h2, .subtopics-list h3, .tweets-container h4 { font-size: 1.5rem; } */
+
+  .dashboard,
+  .topics-list,
+  .subtopics-list,
+  .subtopic-dashboard,
+  .tweets-container { /* Added tweets-container for consistency */
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .content-area { /* If this class is used elsewhere, keep or integrate */
     padding: 10px;
   }
   
-  .tweet-card {
-    margin-bottom: 15px;
+  .tweet-card { /* This specific rule for tweet-card margin was here */
+    margin-bottom: 1rem; /* Consistent with new tweet-card style */
   }
   
   .search-filter-container,
   .sort-controls {
     padding: 15px 10px;
+  }
+
+  /* Navbar brand font size is already handled by a more specific rule:
+     .navbar-brand { font-size: 1.1rem; } */
+  /* Tweet text font size is also handled by a specific rule:
+     .tweet-text { font-size: 0.9rem; } */
+}
+
+/* Adjustments for extra small screens (phones) */
+@media (max-width: 576px) {
+  body {
+    font-size: 14px; /* Further reduce base font for small devices */
+  }
+  h1 { font-size: 1.8rem; }
+  /* Adjusting the more specific h2, h3 rule for this breakpoint */
+  .dashboard h2, .subtopics-list h3, .tweets-container h4, .subtopic-dashboard h2 {
+    font-size: 1.3rem; /* More reduced for very small screens */
+  }
+  .topic-title, .subtopic-title { /* Titles inside cards, already adjusted but can verify */
+    font-size: 1rem; /* Ensure it's not too large after body font change */
+  }
+
+  .dashboard,
+  .topics-list,
+  .subtopics-list,
+  .subtopic-dashboard,
+  .tweets-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .tweet-text { /* Further ensure tweet text is readable */
+    font-size: 0.875rem;
+  }
+
+  .btn, .form-control, .form-select { /* Make form elements and buttons slightly smaller if needed */
+    font-size: 0.9rem;
+  }
+  .navbar-brand { /* Further reduce navbar brand if needed */
+    font-size: 1rem;
+  }
+  .alert { /* Reduce padding in alerts */
+    padding: 0.75rem 1rem;
   }
 }
 
