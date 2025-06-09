@@ -1,7 +1,6 @@
 import * as XLSX from 'xlsx';
-import TopicModelingService from './TopicModelingService';
 
-const { processTweets, TOPIC_DEFINITIONS } = TopicModelingService;
+// TopicModelingService removed, adjust functionality as needed.
 
 async function loadAndProcessData() {
   try {
@@ -37,8 +36,9 @@ async function loadAndProcessData() {
       url: row.URL || row.url || '#'
     }));
     
-    // Process tweets
-    return processTweets(tweets, TOPIC_DEFINITIONS);
+    // TopicModelingService removed, returning raw tweets.
+    // Adjust if further processing or a specific structure is needed.
+    return tweets;
   } catch (error) {
     console.error('SimpleDataLoader: Error loading data:', error);
     throw error;

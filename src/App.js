@@ -85,7 +85,7 @@ function App() {
         setLoading(true);
         setError('');
         const dataService = new DataService();
-        const response = await fetch('/Twitter - Next.xlsx');
+        const response = await fetch('/Twitter_Next_Topics_Subtopics_2025-06-09_15-32-14.xlsx');
         const arrayBuffer = await response.arrayBuffer();
         await dataService.loadData(new Blob([arrayBuffer]));
         const processedTopics = dataService.generateTopics();

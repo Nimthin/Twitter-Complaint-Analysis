@@ -1,5 +1,4 @@
 import * as XLSX from 'xlsx';
-import TopicModelingService from './TopicModelingService';
 
 // Cache key for storing processed data
 const CACHE_KEY = 'NEXT_FASHION_PROCESSED_DATA';
@@ -125,7 +124,6 @@ class OptimizedDataLoader {
       // Process data using a web worker to prevent UI freezing
       const processedData = await this.processDataWithWorker(arrayBuffer);
       
-      // Use the TopicModelingService to assign topics
       console.log('OptimizedDataLoader: Assigning topics to tweets...');
       this.progress = { status: 'processing_topics', percent: 70 };
       
@@ -341,48 +339,10 @@ class OptimizedDataLoader {
       const { tweets, topicsList, subtopicsMap } = data;
       console.log('OptimizedDataLoader: Processing', tweets.length, 'tweets with topics from XLSX');
       
-      // If the XLSX file doesn't have topic information, fall back to TopicModelingService
+      // If the XLSX file doesn't have topic information, fall back to creating fallback topics
       if (!topicsList || topicsList.length === 0) {
-        console.log('OptimizedDataLoader: No topics found in XLSX, using TopicModelingService');
-        const processedTweets = await TopicModelingService.processTweets(tweets);
-        
-        if (!Array.isArray(processedTweets)) {
-          console.error('OptimizedDataLoader: processTweets did not return an array', processedTweets);
-          return this.createFallbackTopics(tweets);
-        }
-        
-        // Create the topic structure from TopicModelingService results
-        const topicsMap = {};
-        
-        processedTweets.forEach(tweet => {
-          const topic = tweet.primaryTopic || 'Other';
-          const subtopic = tweet.subtopic || 'General';
-          
-          if (!topicsMap[topic]) {
-            topicsMap[topic] = { 
-              name: topic, 
-              tweetCount: 0, 
-              subtopics: {} 
-            };
-          }
-          
-          if (!topicsMap[topic].subtopics[subtopic]) {
-            topicsMap[topic].subtopics[subtopic] = { 
-              name: subtopic, 
-              tweetCount: 0, 
-              tweets: [] 
-            };
-          }
-          
-          topicsMap[topic].tweetCount++;
-          topicsMap[topic].subtopics[subtopic].tweetCount++;
-          topicsMap[topic].subtopics[subtopic].tweets.push(tweet);
-        });
-        
-        return Object.values(topicsMap).map(topic => ({
-          ...topic,
-          subtopics: Object.values(topic.subtopics)
-        }));
+        console.log('OptimizedDataLoader: No topics found in XLSX, creating fallback topics.');
+        return this.createFallbackTopics(tweets);
       }
       
       console.log('OptimizedDataLoader: Using topics from XLSX file:', topicsList);
