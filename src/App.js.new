@@ -7,7 +7,6 @@ import * as XLSX from 'xlsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
-import { processTweets, TOPIC_DEFINITIONS as TOPIC_DEFS } from './services/TopicModelingService';
 
 // Function to read Excel file and process data
 const processExcelData = async () => {
@@ -32,39 +31,39 @@ const processExcelData = async () => {
     }));
 
     // Process all tweets with topic modeling
-    const processedTweets = processTweets(tweets);
+    // const processedTweets = processTweets(tweets); // Removed due to TopicModelingService deletion
     
     // Group tweets by topic for the dashboard
-    const topics = TOPIC_DEFS.map(topicDef => {
-      const topicTweets = processedTweets.filter(t => t.primaryTopic === topicDef.name);
+    // const topics = TOPIC_DEFS.map(topicDef => { // Removed due to TopicModelingService deletion
+    //   const topicTweets = processedTweets.filter(t => t.primaryTopic === topicDef.name);
       
-      // Create subtopics based on confidence levels
-      const subtopics = [
-        {
-          name: 'High Confidence',
-          tweetCount: topicTweets.filter(t => t.confidence > 0.7).length,
-          tweets: topicTweets.filter(t => t.confidence > 0.7)
-        },
-        {
-          name: 'Medium Confidence',
-          tweetCount: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7).length,
-          tweets: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7)
-        },
-        {
-          name: 'Low Confidence',
-          tweetCount: topicTweets.filter(t => t.confidence <= 0.4).length,
-          tweets: topicTweets.filter(t => t.confidence <= 0.4)
-        }
-      ].filter(st => st.tweetCount > 0);
+    //   // Create subtopics based on confidence levels
+    //   const subtopics = [
+    //     {
+    //       name: 'High Confidence',
+    //       tweetCount: topicTweets.filter(t => t.confidence > 0.7).length,
+    //       tweets: topicTweets.filter(t => t.confidence > 0.7)
+    //     },
+    //     {
+    //       name: 'Medium Confidence',
+    //       tweetCount: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7).length,
+    //       tweets: topicTweets.filter(t => t.confidence > 0.4 && t.confidence <= 0.7)
+    //     },
+    //     {
+    //       name: 'Low Confidence',
+    //       tweetCount: topicTweets.filter(t => t.confidence <= 0.4).length,
+    //       tweets: topicTweets.filter(t => t.confidence <= 0.4)
+    //     }
+    //   ].filter(st => st.tweetCount > 0);
 
-      return {
-        name: topicDef.name,
-        tweetCount: topicTweets.length,
-        subtopics: subtopics
-      };
-    }).filter(topic => topic.tweetCount > 0);
+    //   return {
+    //     name: topicDef.name,
+    //     tweetCount: topicTweets.length,
+    //     subtopics: subtopics
+    //   };
+    // }).filter(topic => topic.tweetCount > 0);
 
-    return topics;
+    return []; // Return empty array as TopicModelingService is removed
   } catch (error) {
     console.error('Error processing Excel file:', error);
     return [];
