@@ -18,41 +18,10 @@ const TopicComplaintMatrix = ({ topics = [], onBack }) => {
     setLoading(true);
   }, [sortBy, sortDirection]);
 
-  // Get predefined topics and subtopics from DataService
-  const getPredefinedTopicsAndSubtopics = () => {
-    // These are the predefined topic names from DataService.js
-    return [
-      'Order Placement & Checkout',
-      'Delivery & Shipping',
-      'Stock & Availability',
-      'Returns & Refunds',
-      'Product Quality & Faults',
-      'Sizing & Fit',
-      'Pricing & Promotions',
-      'Customer Service Experience',
-      'Digital Platform Issues',
-      'Furniture Assembly & Parts',
-      'Account & Security',
-      'Marketing & Communications',
-      'Product Information & Queries',
-      'Miscellaneous & Other'
-    ];
-  };
-
   // Process matrix data
   const matrixData = useMemo(() => {
     console.log('========== MATRIX DATA CALCULATION ==========');
-    console.log('All Topics:', topics);
-    
-    // Get predefined topics list
-    const predefinedTopics = getPredefinedTopicsAndSubtopics();
-    console.log('Predefined Topics:', predefinedTopics);
-    
-    // Create a map of existing topics for quick lookup
-    const existingTopicsMap = {};
-    topics.forEach(topic => {
-      existingTopicsMap[topic.name] = topic;
-    });
+    console.log('Incoming Topics (props.topics):', topics);
     
     // For each topic-subtopic, always anchor periods to the latest date in that subset
     const allTweetsWithDates = [];
@@ -100,37 +69,34 @@ const TopicComplaintMatrix = ({ topics = [], onBack }) => {
     console.log('- Total tweets processed:', totalTweetsProcessed);
     console.log('- Tweets with valid dates:', tweetsWithValidDates);
 
-    // Create a comprehensive list that includes all predefined topics
+    // Create a comprehensive list directly from props.topics
     const comprehensiveData = [];
-    
-    predefinedTopics.forEach(topicName => {
-      // Check if this predefined topic exists in our data
-      const topic = existingTopicsMap[topicName];
-      
-      if (topic && topic.subtopics && topic.subtopics.length > 0) {
-        topic.subtopics.forEach(subtopic => {
-          // Find the corresponding entry in allTweetsWithDates
-          const match = allTweetsWithDates.find(
-            t => t.topic === topicName && t.subtopic === subtopic.name
-          );
-          comprehensiveData.push({
-            topic: topicName,
-            subtopic: subtopic.name,
-            tweets: match ? match.tweets : [],
-            maxDate: match ? match.maxDate : null
-          });
-        });
-      } else {
-        comprehensiveData.push({
-          topic: topicName,
-          subtopic: 'General',
-          tweets: [],
-          maxDate: null
-        });
-      }
+    topics.forEach(topic => { // 'topics' here refers to props.topics
+        if (topic.subtopics && topic.subtopics.length > 0) {
+            topic.subtopics.forEach(subtopic => {
+                const match = allTweetsWithDates.find(
+                    t => t.topic === topic.name && t.subtopic === subtopic.name
+                );
+                comprehensiveData.push({
+                    topic: topic.name,
+                    subtopic: subtopic.name,
+                    tweets: match ? match.tweets : [],
+                    maxDate: match ? match.maxDate : null
+                });
+            });
+        } else {
+            // Handle topics with no subtopics if that's a possible scenario.
+            const match = allTweetsWithDates.find(t => t.topic === topic.name && !t.subtopic); // Or a default subtopic name
+            comprehensiveData.push({
+                topic: topic.name,
+                subtopic: 'General', // Fallback if no subtopics
+                tweets: match ? match.tweets : [],
+                maxDate: match ? match.maxDate : null
+            });
+        }
     });
     
-    console.log('Comprehensive data created with all predefined topics:', comprehensiveData.length, 'entries');
+    console.log('Comprehensive data created directly from props.topics:', comprehensiveData.length, 'entries');
     
     // Process the data for each subtopic
     const processedData = comprehensiveData.map(item => {
